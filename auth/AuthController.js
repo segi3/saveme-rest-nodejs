@@ -58,31 +58,9 @@ router.post('/register', upload.single('verification-image'), (req, res, next) =
                 // return res.status(500).send(err)
                 return res.status(500).send("There was a problem registering the user.")
 
-            // create an access token
-            var token = jwt.sign({ id: user._id }, config.secret, {
-                expiresIn: 900
-            });
-            // create an refresh token
-            var refresh_token = jwt.sign({ id: user._id }, config.secret, {
-                expiresIn: 86400 // expires in 24 hours
-            });
-
-            // append refresh token to user
-            User.findByIdAndUpdate(
-                { _id: user._id },
-                { $push: { refreshTokens: refresh_token } },
-                function (err, success) {
-                    if (err) return res.status(500).send(err)
-
-                    res.status(200).send({
-                        auth: true,
-                        token: token,
-                        refresh_token: refresh_token
-                    });
-                }
-            )
-            
-            
+                res.status(200).send({
+                    message: 'Account succesfully registered'
+                });
         });
 
 });
@@ -134,8 +112,11 @@ router.get('/me', VerifyToken, function (req, res, next) {
 
     User.findById(req.userId,
         {
-            password: 0
+            __v: 0,
+            password: 0,
             verificationImage: 0,
+            location: 0,
+            refreshTokens: 0
         },
     function (err, user) {
         if (err) return res.status(500).send("There was a problem finding the user.");
@@ -161,16 +142,27 @@ router.post('/login', function (req, res) {
             token: null
         });
 
-        var token = jwt.sign({
-            id: user._id
-        }, config.secret, {
-            expiresIn: 86400 // expires in 24 hours
+        // create an access token
+        var token = jwt.sign({ id: user._id }, config.secret, {
+            expiresIn: 30 // expire in 15 minutes (900)
         });
+        // create an refresh token
+        var refresh_token = jwt.sign({ id: user._id }, config.secret, {});
 
-        res.status(200).send({
-            auth: true,
-            token: token
-        });
+        // append refresh token to user
+        User.findByIdAndUpdate(
+            { _id: user._id },
+            { $push: { refreshTokens: refresh_token } },
+            function (err, success) {
+                if (err) return res.status(500).send(err)
+
+                res.status(200).send({
+                    auth: true,
+                    token: token,
+                    refresh_token: refresh_token
+                });
+            }
+        )
     });
 
 });
