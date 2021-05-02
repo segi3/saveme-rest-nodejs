@@ -7,7 +7,7 @@ var UserSchema = new mongoose.Schema({
     type: Array,
     "default": []
   },
-  verivicationImage: {
+  verificationImage: {
     data: Buffer,
     contentType: String
   },

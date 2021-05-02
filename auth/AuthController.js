@@ -47,7 +47,7 @@ router.post('/register', upload.single('verification-image'), (req, res, next) =
             name: req.body.name,
             email: req.body.email,
             password: hashedPassword,
-            verivicationImage: {
+            verificationImage: {
                 data: fs.readFileSync(path.join(rootdir+'/uploads/'+ req.file.filename)),
                 contentType: 'image/png'
             },
@@ -97,7 +97,7 @@ router.post('/image', VerifyToken, function (req, res, next) {
         if (err) return res.status(500).send("There was a problem finding the user.");
         if (!user) return res.status(404).send("No user found.");
 
-        res.status(200).send(user.verivicationImage.data.toString('base64'));
+        res.status(200).send(user.verificationImage.data.toString('base64'));
     });
 })
 
@@ -135,6 +135,7 @@ router.get('/me', VerifyToken, function (req, res, next) {
     User.findById(req.userId,
         {
             password: 0
+            verificationImage: 0,
         },
     function (err, user) {
         if (err) return res.status(500).send("There was a problem finding the user.");
