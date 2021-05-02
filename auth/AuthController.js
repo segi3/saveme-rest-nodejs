@@ -56,10 +56,12 @@ router.post('/register', upload.single('verification-image'), (req, res, next) =
         function (err, user) {
             if (err)
                 // return res.status(500).send(err)
-                return res.status(500).send("There was a problem registering the user.")
+                return res.status(500).send({
+                    message: "There was a problem registering the user."
+                });
 
                 res.status(200).send({
-                    message: 'Account succesfully registered'
+                    message: 'Account succesfully registered.'
                 });
         });
 
@@ -133,18 +135,18 @@ router.post('/login', function (req, res) {
     User.findOne({
         email: req.body.email
     }, function (err, user) {
-        if (err) return res.status(500).send('Error on the server.');
-        if (!user) return res.status(404).send('No user found.');
+        if (err) return res.status(500).send({ auth: false, message: 'Error on the server.'});
+        if (!user) return res.status(404).send({ auth: false, message: 'No user found.'});
 
         var passwordIsValid = bcrypt.compareSync(req.body.password, user.password);
         if (!passwordIsValid) return res.status(401).send({
             auth: false,
-            token: null
+            message: "Failed to authenticate token."
         });
 
         // create an access token
         var token = jwt.sign({ id: user._id }, config.secret, {
-            expiresIn: 30 // expire in 15 minutes (900)
+            expiresIn: 900 // expire in 15 minutes (900)
         });
         // create an refresh token
         var refresh_token = jwt.sign({ id: user._id }, config.secret, {});
