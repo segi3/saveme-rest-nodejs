@@ -1,4 +1,5 @@
-var app = require('./app');
+require('module-alias/register')
+var app = require('@root/app');
 var port = process.env.PORT || 3000;
 
 var server = app.listen(port, function() {

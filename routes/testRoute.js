@@ -1,5 +1,5 @@
 const express = require('express')
-const testController = require('../controllers/testController')
+const testController = require('@controller/testController')
 
 const router = express.Router()
 // const bodyParser = require('body-parser')

@@ -1,4 +1,4 @@
-const { db } = require('../utils/firebase')
+const { db } = require('@util/firebase')
 const usersCol = db.collection('users')
 
 const index_test = async (req, res) => {
