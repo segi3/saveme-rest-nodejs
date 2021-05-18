@@ -3,11 +3,13 @@ var admin = require("firebase-admin");
 var serviceAccount = require("@root/serviceAccountKey.json");
 
 admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
-  databaseURL: "https://b21-cap0083-default-rtdb.asia-southeast1.firebasedatabase.app"
+	credential: admin.credential.cert(serviceAccount),
+	databaseURL: process.env.DATABASE_URL,
+	storageBucket: process.env.BUCKET_URL
 });
 
 module.exports = {
-    admin,
-    db: admin.firestore()
+	admin,
+	db: admin.firestore(),
+	bucket: admin.storage().bucket()
 }
