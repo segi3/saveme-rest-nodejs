@@ -11,5 +11,6 @@ admin.initializeApp({
 module.exports = {
 	admin,
 	db: admin.firestore(),
-	bucket: admin.storage().bucket()
+	bucket: admin.storage().bucket(),
+	messaging: admin.messaging()
 }

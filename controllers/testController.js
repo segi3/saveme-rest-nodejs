@@ -1,4 +1,4 @@
-const { bucket, db } = require('@util/firebase')
+const { bucket, db, messaging } = require('@util/firebase')
 const usersCol = db.collection('users')
 
 const saltedMd5 = require('salted-md5')
@@ -7,6 +7,33 @@ const path = require('path')
 const express = require('express')
 const { storage } = require('firebase-admin')
 const app = express()
+
+const fcm_test = (req, res) => {
+
+    const notification_options = {
+        priority: 'high',
+        timeToLive: 60 * 60 * 24
+    }
+
+    const registration_tokens = ["fJQGPhG5SIC93z7T1OY2YQ:APA91bG6EzjNyuTFLEBfih1hkS44MVGnwW9fwHUB8uImS7f_kryspfRPwtc8nR7xvIFgJJcUWECtAp2C-xHzLdzi7HvGgEAC0-RlVE5-VTWZws7UtGEwNnmfYrqgijrLuVkX48mYq39f"]
+
+    const payload = {
+            notification: {
+                title: 'title You have a new follower!',
+                body: `body is now following you.`,
+        }
+      };
+
+    messaging.sendToDevice(registration_tokens, payload, notification_options)
+        .then((response) => {
+            console.log(response)
+            res.status(200).send({message: 'notification successfully sent.'})
+        })
+        .catch((err) => {
+            res.status(500).send({message: 'failed to send nottif :(', error: err})
+            console.log(err)
+        })
+}
 
 const index_test = async (req, res) => {
 
@@ -26,6 +53,7 @@ const index_test = async (req, res) => {
             email: 'rafi2@email.com'
         })
     
+
         res.status(200).send({
             body: req.body
         })
@@ -78,5 +106,6 @@ const file_download = async (req, res) => {
 module.exports = {
     index_test,
     file_test,
-    file_download
+    file_download,
+    fcm_test
 }

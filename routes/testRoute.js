@@ -10,5 +10,6 @@ const router = express.Router()
 router.post('/p', testController.index_test)
 router.post('/file', upload.single('file'), testController.file_test)
 router.get('/dl', testController.file_download)
+router.post('/fcm', testController.fcm_test)
 
 module.exports = router
