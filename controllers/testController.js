@@ -4,10 +4,6 @@ const usersCol = db.collection('users')
 const saltedMd5 = require('salted-md5')
 const path = require('path')
 
-const express = require('express')
-const { storage } = require('firebase-admin')
-const app = express()
-
 const fcm_test = (req, res) => {
 
     const notification_options = {
