@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-const db = require('@root/db');
+// const db = require('@root/db');
 
 // config env
 require('dotenv').config()
@@ -19,8 +19,14 @@ app.use('/users', UserController);
 const AuthController = require('@root/auth/AuthController');
 app.use('/api/auth/v1', AuthController);
 
-// use routes
+//* use routes
+
+// testing routes
 const testRoutes = require('@route/testRoute')
 app.use('/test', testRoutes)
+
+// acount routes
+const accountRoutes = require('@route/accountRoutes')
+app.use('/api/account/v1', accountRoutes)
 
 module.exports = app;
