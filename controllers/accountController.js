@@ -3,6 +3,48 @@ const usersCol = db.collection('users')
 
 const saltedMd5 = require('salted-md5')
 
+// TODO: api
+
+// ! register
+// ! fetch data user (pake _id si user)
+// ! update/insert koordinat user
+// ! update registration token punya user
+
+
+// * nge ping user lain di sekitar
+
+// * server nya python
+
+const updateRegistrationToken = async (req, res) => {
+    /*
+    * payload example
+
+    * _id: id punya user
+    * deviceRegistrationToken: registration token punya user
+    */
+
+    if (!req.body) return res.status(500).send({ message: "Data was not provided"});
+
+    let docRef = usersCol.doc(req.body._id)
+
+    try {
+        
+        await docRef.update({
+            deviceRegistrationToken: req.body.deviceRegistrationToken
+        })
+
+        res.status(200).send({
+            message: "registration token update success.",
+            new_token: req.body.deviceRegistrationToken
+        })
+    } catch (err) {
+        console.log(err)
+        res.status(500).send({
+            message: "Failed to update token data."
+        })
+    }
+}
+
 const updateLocation = async (req, res) => {
 
     /*
@@ -85,6 +127,7 @@ const registerAccount = async (req, res) => {
     * alamat: 'rahayu residence blok a7/1'
     * kota: 'Serang'
     * provinsi: 'Banten'
+    * zipcode: '42114'
 
     * deviceRegistrationToken: token dari fcm android
     */
@@ -103,8 +146,6 @@ const registerAccount = async (req, res) => {
     } 
 
     try {
-
-        
 
         const docRef = usersCol.doc(account_uuid)
 
@@ -135,5 +176,8 @@ const registerAccount = async (req, res) => {
 }
 
 module.exports = {
-    registerAccount
+    registerAccount,
+    fetchAccount,
+    updateLocation,
+    updateRegistrationToken
 }

@@ -10,5 +10,6 @@ const router = express.Router()
 router.post('/register', accountController.registerAccount)
 router.post('/fetch', accountController.fetchAccount)
 router.post('/updateLocation', accountController.updateLocation)
+router.post('/updateRegistrationToken', accountController.updateRegistrationToken)
 
 module.exports = router
