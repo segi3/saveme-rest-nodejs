@@ -3,6 +3,37 @@ const usersCol = db.collection('users')
 
 const saltedMd5 = require('salted-md5')
 
+const fetchAccount = async (req, res) => {
+
+    /*
+    * payload example
+
+    * _id: id punya user
+    */
+
+    if (!req.body) return res.status(500).send({ message: "Data was not provided"});
+
+    try {
+
+        const user_account = await usersCol.doc(req.body._id).get()
+
+        res.status(200).send({
+            message: "fetch success.",
+            data: user_account.data()
+        })
+
+        
+    console.log(user_account)
+
+    }catch(err) {
+        console.log(err)
+        res.status(500).send({
+            message: "Failed to fetch data."
+        })
+    }
+
+}
+
 const registerAccount = async (req, res) => {
 
     /*
