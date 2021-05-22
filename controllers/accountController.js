@@ -3,6 +3,45 @@ const usersCol = db.collection('users')
 
 const saltedMd5 = require('salted-md5')
 
+const updateLocation = async (req, res) => {
+
+    /*
+    * payload example
+
+    * _id: id punya user
+    * lang: koodinat lang
+    * lot: kodrinat lot
+    */
+
+    if (!req.body) return res.status(500).send({ message: "Data was not provided"});
+
+    let docRef = usersCol.doc(req.body._id)
+
+    try {
+        
+        await docRef.update({
+            location: {
+                long: req.body.long,
+                lat: req.body.lat
+            }
+        })
+
+        res.status(200).send({
+            message: "location update success.",
+            location: {
+                long: req.body.long,
+                lat: req.body.lat
+            }
+        })
+    } catch (err) {
+        console.log(err)
+        res.status(500).send({
+            message: "Failed to update location data."
+        })
+    }
+
+}
+
 const fetchAccount = async (req, res) => {
 
     /*
