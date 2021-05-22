@@ -45,6 +45,7 @@ const registerAccount = async (req, res) => {
             password: req.body.password,
             alamat: req.body.alamat,
             kota: req.body.kota,
+            zipcode: req.body.zipcode,
             provinsi: req.body.provinsi,
             deviceRegistrationToken: req.body.deviceRegistrationToken
         })
