@@ -1,4 +1,3 @@
-host: `159.65.4.250:3000`
 
 # account
 
@@ -34,7 +33,7 @@ Hasil request:
 ```json
 {
   "message": "Insert success.",
-  "_id": id punya user yang di registrasi
+  "_id": // id punya user yang di registrasi
 }
 ```
 
@@ -64,7 +63,7 @@ Hasil request:
 {
   "message": "fetch success.",
   "data": {
-      json object isi data punya akun
+      // json object isi data punya akun
   }
 }
 ```
@@ -97,8 +96,8 @@ Hasil request:
 {
   "message": "location update success.",
   "location": {
-      "long": long dari request,
-      "lat": lat dari request
+      "long": // long dari request,
+      "lat": // lat dari request
   }
 }
 ```
@@ -129,7 +128,7 @@ Hasil request:
 ```json
 {
   "message": "registration token update success.",
-  "new_token": token dari request
+  "new_token": // token dari request
 }
 ```
 
@@ -164,6 +163,6 @@ Hasil request:
 ```json
 {
   "message": "registration token update success.",
-  "new_token": token dari request
+  "new_token": // token dari request
 }
 ```
