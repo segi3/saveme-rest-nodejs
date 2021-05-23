@@ -1,20 +1,31 @@
 host: `159.65.4.250:3000`
 
-# auth
+# account
 
 ## register akun
 
 Penjelasan route: untuk register akun baru
 
-endpoint: `/api/auth/register`
+tipe: `post`
+
+host: `http://159.65.4.250:3000`
+
+endpoint: `/api/account/v1/register`
+
+full url: `http://159.65.4.250:3000/api/account/v1/register`
 
 | field | deskripsi | contoh |
 | --- | --- | --- |
-| `name` | nama pengguna | `rafi nizar` |
+| `fullname` | nama pengguna | `rafi nizar` |
 | `email` | email pengguna | `rafi@email.com` |
-| `password` | password akun (sementara di hash di server) | `12345678` |
-| `verification-image` | foto pengguna dengan ktp, pake base64 | `base64 byte` |
-| `location` | array isi lang, lat | `[50, 25.3]` |
+| `password` | password akun | `-` |
+| `umur` | umur pengguna | `21` |
+| `gender` | gender pengguna | `-` |
+| `alamat` | alamat pengguna | `-` |
+| `kota` | kota pegguna | `Serang` |
+| `provinsi` | provinsi pengguna | `Banten` |
+| `zipcode` | zipcode alamat | `42114` |
+| `deviceRegistrationToken` | token FCM | `-` |
 
 <br>
 
@@ -22,97 +33,137 @@ Hasil request:
 
 ```json
 {
-    "message": "Account succesfully registered."
+  "message": "Insert success.",
+  "_id": id punya user yang di registrasi
 }
 ```
 
-## login akun
+<br><br>
 
-Penjelasan route: untuk login akun yang sudah terdaftar
+## fetch data akun
 
-endpoint: `/api/auth/login`
+Penjelasan route: fetch data milik akun
 
-| field | deskripsi |
-| --- | --- |
-| `email` | email pengguna |
-| `password` | password pengguna |
+tipe: `post`
+
+host: `http://159.65.4.250:3000`
+
+endpoint: `/api/account/v1/fetch`
+
+full url: `http://159.65.4.250:3000/api/account/v1/fetch`
+
+| field | deskripsi | contoh |
+| --- | --- | --- |
+| `_id` | id akun | `-` |
 
 <br>
 
-Hasil request berhasil:
+Hasil request:
 
 ```json
 {
-    "auth": true,
-    "token": "eyJhbGciOiJ...", // string token
-    "refresh_token": "eyJhbGciOiJ..." // string refresh token
+  "message": "fetch success.",
+  "data": {
+      json object isi data punya akun
+  }
 }
 ```
 
-**Auth token dipake untuk semua request selain login sama register**
-token biasa umur 15 menit
-refresh token umur engga expired
+<br><br>
 
-Hasil request gagal (401 token invalid):
-```json
-{
-    "auth": false,
-    "message": "Failed to authenticate token."
-}
-```
+## update location long lat
 
-Hasil request gagal (500 trobel di server):
-```json
-{
-    auth: false,
-    "message": "Error on the server."
-}
-```
+Penjelasan route: update long lat user
 
-Hasil request gagal (404 user not found):
-```json
-{
-    auth: false,
-    "message": "No user found."
-}
-```
+tipe: `post`
 
-## refresh auth token
+host: `http://159.65.4.250:3000`
 
-Penjelasan route: untuk dapetin access token baru pake refresh token
+endpoint: `/api/account/v1/updateLocation`
 
-endpoint: `/api/auth/token`
+full url: `http://159.65.4.250:3000/api/account/v1/updateLocation`
 
-| field | deskripsi |
-| --- | --- |
-| `_id` | id user, bisa di dapetin dari `/api/auth/v1/me` |
-| `email` | email user |
-| `refresh_token` | refresh token punya user |
+| field | deskripsi | contoh |
+| --- | --- | --- |
+| `_id` | id akun | `-` |
+| `long` | koordinat longitude | `3.14` |
+| `lat` | koordinat latitude | `14.11` |
 
 <br>
 
-Hasil request berhasil:
+Hasil request:
 
 ```json
 {
-    "token": "eyJhbGciOiJ..." // string token
+  "message": "location update success.",
+  "location": {
+      "long": long dari request,
+      "lat": lat dari request
+  }
 }
 ```
 
-## dapetin data user sendiri
+<br><br>
 
-Penjelasan route: untuk dapetin access token baru pake refresh token
+## update registration token
 
-endpoint: `/api/auth/me`
+Penjelasan route: update token fcm punya user
 
-engga butuh body, cuma butuh header `x-access-token` pake value **access token**
+tipe: `post`
 
-Hasil request berhasil:
+host: `http://159.65.4.250:3000`
+
+endpoint: `/api/account/v1/updateRegistrationToken`
+
+full url: `http://159.65.4.250:3000/api/account/v1/updateRegistrationToken`
+
+| field | deskripsi | contoh |
+| --- | --- | --- |
+| `_id` | id akun | `-` |
+| `deviceRegistrationToken` | token FCM | `-` |
+
+<br>
+
+Hasil request:
 
 ```json
 {
-    "_id": "608ebc562a8f5b4ef00edbff",
-    "name": "Rafi Nizar Abiyyi",
-    "email": "rafi17@email.com"
+  "message": "registration token update success.",
+  "new_token": token dari request
+}
+```
+
+<br><br>
+
+
+# Ping
+## ping
+
+Penjelasan route: ping user lain di sekitar
+
+tipe: `post`
+
+host: `http://159.65.4.250:3000`
+
+endpoint: `/api/account/v1/updateRegistrationToken`
+
+full url: `http://159.65.4.250:3000/api/account/v1/updateRegistrationToken`
+
+| field | deskripsi | contoh |
+| --- | --- | --- |
+| `_id` | id akun | `-` |
+| `kejahatan` | jenis kejahatan yang dipilih si user | `-` |
+| `long` | koordinat longitude | `3.14` |
+| `lat` | koordinat latitude | `14.11` |
+| `deviceRegistrationToken` | token FCM | `-` |
+
+<br>
+
+Hasil request:
+
+```json
+{
+  "message": "registration token update success.",
+  "new_token": token dari request
 }
 ```
