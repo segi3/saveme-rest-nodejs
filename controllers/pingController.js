@@ -29,7 +29,9 @@ const pingOthers = async (req, res) => {
 
         const ping_history = {
             _id: req.body._id,
-            time: new Date().toISOString().replace(/T/, ' ').replace(/\..+/, ''),
+            time: new Date().toLocaleString('en-US', { timeZone: 'Asia/Jakarta', hour12: false })
+                    .replace(/T/, ' ')
+                    .replace(/\,/, ''),
             user_data: user_account.data(),
             kejahatan: req.body.kejahatan,
             location: {
@@ -47,6 +49,7 @@ const pingOthers = async (req, res) => {
         })
 
     } catch (err) {
+        console.log(err)
         res.status(500).send({
             message: "failed to send ping."
         })
