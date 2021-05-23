@@ -29,4 +29,8 @@ app.use('/test', testRoutes)
 const accountRoutes = require('@route/accountRoutes')
 app.use('/api/account/v1', accountRoutes)
 
+// ping routes
+const pingRoutes = require('@route/pingRoutes')
+app.use('/api/ping/v1', pingRoutes)
+
 module.exports = app;
