@@ -123,6 +123,7 @@ const registerAccount = async (req, res) => {
     * fullname: 'rafi nizar abiyyi'
     * email: 'rafi.nizar17@gmail.com'
     * password: password // lebih baik udah hashed
+    * gender: male/female
     * umur: 21
     * alamat: 'rahayu residence blok a7/1'
     * kota: 'Serang'
@@ -155,6 +156,7 @@ const registerAccount = async (req, res) => {
             email: req.body.email,
             password: req.body.password,
             umur: req.body.umur,
+            gender: req.body.gender,
             alamat: req.body.alamat,
             kota: req.body.kota,
             zipcode: req.body.zipcode,
