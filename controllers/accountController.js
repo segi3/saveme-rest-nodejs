@@ -135,10 +135,7 @@ const registerAccount = async (req, res) => {
 
     if (!req.body) return res.status(500).send({ message: "Data was not provided"});
 
-    const account_uuid = saltedMd5(
-        req.body.email,
-        'mudahkan kami menyelesaikan project ini'
-    )
+    const account_uuid = req.body._id
 
     const doc_check = await usersCol.doc(account_uuid).get()
 

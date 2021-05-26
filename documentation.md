@@ -15,6 +15,7 @@ full url: `http://159.65.4.250:3000/api/account/v1/register`
 
 | field | deskripsi | contoh |
 | --- | --- | --- |
+| `_id` | id dari auth | `-` |
 | `fullname` | nama pengguna | `rafi nizar` |
 | `email` | email pengguna | `rafi@email.com` |
 | `password` | password akun | `-` |
