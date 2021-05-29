@@ -1,4 +1,7 @@
-const { db } = require('@util/firebase')
+const {
+    db,
+    messaging
+} = require('@util/firebase')
 const usersCol = db.collection('users')
 const pingCol = db.collection('ping_histories')
 
@@ -21,7 +24,9 @@ const pingOthers = async (req, res) => {
     * deviceRegistrationToken: registration token punya user
     */
 
-    if (!req.body) return res.status(500).send({ message: "Data was not provided"});
+    if (!req.body) return res.status(500).send({
+        message: "Data was not provided"
+    });
 
     // fetch account data
     try {
@@ -29,9 +34,12 @@ const pingOthers = async (req, res) => {
 
         const ping_history = {
             _id: req.body._id,
-            time: new Date().toLocaleString('en-US', { timeZone: 'Asia/Jakarta', hour12: false })
-                    .replace(/T/, ' ')
-                    .replace(/\,/, ''),
+            time: new Date().toLocaleString('en-US', {
+                    timeZone: 'Asia/Jakarta',
+                    hour12: false
+                })
+                .replace(/T/, ' ')
+                .replace(/\,/, ''),
             user_data: user_account.data(),
             kejahatan: req.body.kejahatan,
             location: {
@@ -43,10 +51,36 @@ const pingOthers = async (req, res) => {
 
         await pingCol.add(ping_history)
 
-        res.status(200).send({
-            message: "ping success.",
-            ping_data: ping_history
+        const notification_options = {
+            priority: 'high',
+            timeToLive: 60 * 60 * 24
+        }
+
+        var registration_tokens = []
+        registration_tokens.push(req.body.deviceRegistrationToken)
+
+        const payload2 = {
+            notification: {
+                click_action: ".MainActivity",
+                title: 'Notification header',
+                body: `${req.body.long}, ${req.body.lat}.`,
+            },
+            data: {
+                lat: req.body.lat,
+                long: req.body.long
+            },
+            to: req.body.deviceRegistrationToken
+        };
+
+        messaging.sendToDevice(registration_tokens, payload2, notification_options)
+        .then((response) => {
+            console.log(response)
         })
+        .catch((err) => {
+            console.log(err)
+        })
+
+        res.status(200).send({message: 'test ping.'})
 
     } catch (err) {
         console.log(err)
