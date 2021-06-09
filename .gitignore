@@ -7,5 +7,4 @@ variables.env
 config.js
 serviceAccountKey.json
 firebase.html
-README.md
 rules.bak

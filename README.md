@@ -1,5 +1,52 @@
+# Node js API server
 
-# account
+B21CAP83
+
+This is the backend server that served almost all backend logics of the applications. 
+
+To run the server, several steps and files must be provided to run the server.
+
+First fill out the env variables on a `.env` file.
+```cmd
+cp .env-sample .env
+```
+Required variables name are already included in `.env-sample` and all is obtainable from the google firebase console.
+
+Second, is to get an application service account key that is also obtainable from the google firebase console. Once it is obtained, place the service account key on the root folder of the project with the name `serviceAccountKey.jon`.
+
+Example of `serviceAccountKey.json`
+```json
+{
+  "type": "service_account",
+  "project_id": "b...",
+  "private_key_id": "4de4f...",
+  "private_key": "-----BEGIN PRIVATE KEY-----
+    ...
+  \n-----END PRIVATE KEY-----\n",
+  "client_email": "firebase...",
+  "client_id": "101155...",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata..."
+}
+
+```
+
+Lastly is to install all of node js depedencies by using 
+```
+npm install
+```
+
+And start the service using
+```
+node server
+```
+
+
+<br>
+
+# API Documentations
 
 ## register akun
 
