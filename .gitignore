@@ -4,7 +4,6 @@ node_modules
 npm-debug.log
 .serverless
 variables.env
-config.js
 serviceAccountKey.json
 firebase.html
 rules.bak
