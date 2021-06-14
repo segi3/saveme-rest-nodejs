@@ -12,7 +12,7 @@ cp .env-sample .env
 ```
 Required variables name are already included in `.env-sample` and all is obtainable from the google firebase console.
 
-Second, is to get an application service account key that is also obtainable from the google firebase console. Once it is obtained, place the service account key on the root folder of the project with the name `serviceAccountKey.jon`.
+Second, is to get an application service account key that is also obtainable from the google firebase console. Once it is obtained, place the service account key on the root folder of the project with the name `serviceAccountKey.json`.
 
 Example of `serviceAccountKey.json`
 ```json
